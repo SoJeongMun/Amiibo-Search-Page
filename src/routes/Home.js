@@ -5,6 +5,8 @@ import Style from '../Style.scss';
 function Home() {
 	const [amiibo, setAmiibo] = useState([]);
 	const [loading, setLoading] = useState(true);
+	// const [cardModal, setCardModal] = useState(false);
+
 	const getAmiibo = async () => {
 		try {
 			const res = await (
@@ -34,13 +36,26 @@ function Home() {
 		);
 	}, [amiibo]);
 
+	// const getCardModal = (cardModal) => {
+	// 	setCardModal(cardModal);
+	// };
+
 	return (
 		<div className="main">
+			{/* {cardModal === true ? <CardModal image={filterAmiibos.image} /> : null} */}
 			<div className="contents">
 				{loading ? 'Loading...' : <AmiiboCard filterAmiibos={filterAmiibos} />}
 			</div>
 		</div>
 	);
 }
+
+// function CardModal({image}) {
+// 	return (
+// 		<div className='card-modal'>
+// 			<img src={image} alt="amiiboCard" />
+// 		</div>
+// 	)
+// }
 
 export default Home;
