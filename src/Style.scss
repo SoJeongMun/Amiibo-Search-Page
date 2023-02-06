@@ -1,9 +1,14 @@
-.main{
-	.contents {
-		margin: 0 auto;
-		text-align: center;
-		.card-modal{
-			background-color: rgba(0,0,0,0.3);
-		}
-	}
+.main {
+  .contents {
+    margin: 0 auto;
+    text-align: center;
+    .container {
+      img {
+        cursor: pointer;
+      }
+    }
+    .card-popup {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
 }

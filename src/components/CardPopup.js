@@ -1,7 +1,7 @@
-function CardPopup({ image }) {
+function CardPopup({ img }) {
   return (
-    <div className='card-modal'>
-      <img src={image} alt='amiiboCard' />
+    <div className='card-popup'>
+      <img src={img} alt='amiiboCard' />
     </div>
   )
 }

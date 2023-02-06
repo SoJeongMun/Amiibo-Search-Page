@@ -1,11 +1,12 @@
 import { useState, useEffect, useMemo } from 'react'
 import AmiiboCard from '../components/AmiiboCard'
+import CardPopup from '../components/CardPopup'
 import '../Style.scss'
 
 function Home() {
   const [amiibo, setAmiibo] = useState([])
   const [loading, setLoading] = useState(true)
-  // const [cardModal, setCardModal] = useState(false);
+  const [cardPopup, setCardPopup] = useState('')
 
   const getAmiibo = async () => {
     try {
@@ -25,37 +26,39 @@ function Home() {
     getAmiibo()
   }, [])
 
-  const filterAmiibos = useMemo(() => {
-    return (
+  const filterAmiibos = useMemo(
+    () =>
       amiibo
         .filter((update) => update.release.jp === '2015-07-30')
-        // .map((element) => {
-        // 	return { name: element.name, image: element.image };
-        // });
-        .map(({ name, image, tail }) => ({ name, image, tail }))
-    )
-  }, [amiibo])
+        .map(({ name, image, tail }) => ({ name, image, tail })),
+    [amiibo],
+  )
 
-  // const getCardModal = (cardModal) => {
-  // 	setCardModal(cardModal);
-  // };
+  const getCardPopup = (cardPopup) => {
+    setCardPopup(cardPopup)
+  }
+  const clickedCard = filterAmiibos.find((el) => el.tail === cardPopup)
 
   return (
     <div className='main'>
-      {/* {cardModal === true ? <CardModal image={filterAmiibos.image} /> : null} */}
       <div className='contents'>
-        {loading ? 'Loading...' : <AmiiboCard filterAmiibos={filterAmiibos} />}
+        {loading ? (
+          'Loading...'
+        ) : (
+          <div>
+            {cardPopup === clickedCard?.tail ? (
+              <CardPopup img={clickedCard?.image} />
+            ) : null}
+            <AmiiboCard
+              filterAmiibos={filterAmiibos}
+              getCardPopup={getCardPopup}
+              cardPopup={cardPopup}
+            />
+          </div>
+        )}
       </div>
     </div>
   )
 }
-
-// function CardModal({image}) {
-// 	return (
-// 		<div className='card-modal'>
-// 			<img src={image} alt="amiiboCard" />
-// 		</div>
-// 	)
-// }
 
 export default Home

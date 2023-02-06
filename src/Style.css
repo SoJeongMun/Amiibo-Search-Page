@@ -1,0 +1,10 @@
+.main .contents {
+  margin: 0 auto;
+  text-align: center;
+}
+.main .contents .container img {
+  cursor: pointer;
+}
+.main .contents .card-popup {
+  background-color: rgba(0, 0, 0, 0.3);
+}/*# sourceMappingURL=Style.css.map */

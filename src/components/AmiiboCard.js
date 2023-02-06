@@ -1,9 +1,7 @@
 import { useMemo, useState } from 'react'
-import CardPopup from './CardPopup'
 
-function AmiiboCard({ filterAmiibos }) {
+function AmiiboCard({ filterAmiibos, getCardPopup, cardPopup }) {
   const [search, setSearch] = useState('')
-  const [cardPopup, setCardPopup] = useState(false)
 
   const onChangeSearch = (e) => {
     setSearch(e.target.value)
@@ -19,13 +17,10 @@ function AmiiboCard({ filterAmiibos }) {
     setSearch('')
   }
 
-  const openPopup = () => {
-    setCardPopup(!cardPopup)
+  const openPopup = (e) => {
+    cardPopup = e.target.id
+    getCardPopup(cardPopup)
   }
-  // const openModal = () => {
-  // 	getCardModal(!cardModal)
-  // };
-
   return (
     <div className='container'>
       <input
@@ -34,21 +29,22 @@ function AmiiboCard({ filterAmiibos }) {
         value={search}
         onChange={onChangeSearch}
       />
-      {search.length > 0 ? (
-        <button className='delete-btn' onClick={deleteInput}>
+      {search.length ? (
+        <button type='button' className='delete-btn' onClick={deleteInput}>
           X
         </button>
       ) : null}
-      {searched.map((amiibo) => {
-        return (
-          <div key={amiibo.tail}>
-            <p className='title'>{amiibo.name}</p>
-            <img src={amiibo.image} alt='amiiboCard' onClick={openPopup} />
-            {/* TODO : 클릭한 이미지의 모달만 열리게 만들기 */}
-          </div>
-        )
-      })}
-      {cardPopup === true ? <CardPopup image={filterAmiibos.image} /> : null}
+      {searched.map((amiibo) => (
+        <div key={amiibo.tail}>
+          <p className='title'>{amiibo.name}</p>
+          <img
+            id={amiibo.tail}
+            src={amiibo.image}
+            alt='amiiboCard'
+            onClick={openPopup}
+          />
+        </div>
+      ))}
     </div>
   )
 }
