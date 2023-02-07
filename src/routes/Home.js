@@ -31,7 +31,7 @@ function Home() {
       amiibo
         .filter((update) => update.release.jp === '2015-07-30')
         .map(({ name, image, tail }) => ({ name, image, tail }))
-        .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)),
+        .sort((a, b) => a.name.localeCompare(b.name)),
     [amiibo],
   )
 

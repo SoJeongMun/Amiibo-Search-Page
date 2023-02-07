@@ -5,7 +5,7 @@ function CardPopup({ img }) {
 
   return (
     <div className='card-popup hidden'>
-      <div>
+      <div className='img-box'>
         <img src={img} alt='amiiboCard' />
       </div>
       <button type='button' onClick={onClick}>
