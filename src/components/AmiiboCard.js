@@ -1,44 +1,48 @@
 import { useMemo, useState } from 'react'
 
 function AmiiboCard({ filterAmiibos, getCardPopup, cardPopup }) {
-  const [userInput, setUserInput] = useState('')
+  const [search, setSearch] = useState('')
 
   const onChangeSearch = (e) => {
-    setUserInput(e.target.value)
+    setSearch(e.target.value)
   }
-  const searchedList = useMemo(
+  const searched = useMemo(
     () =>
       filterAmiibos.filter((elements) =>
-        elements.name?.match(new RegExp(userInput, 'gi')),
+        elements.name?.match(new RegExp(search, 'gi')),
       ),
-    [filterAmiibos, userInput],
+    [filterAmiibos, search],
   )
   const deleteInput = () => {
-    setUserInput('')
+    setSearch('')
   }
 
   const openPopup = (e) => {
     cardPopup = e.target.id
     getCardPopup(cardPopup)
   }
-
   return (
     <div className='container'>
       <input
         type='text'
         placeholder='검색어를 입력해주세요.'
-        value={userInput}
+        value={search}
         onChange={onChangeSearch}
       />
-      {userInput.length ? (
+      {search.length ? (
         <button type='button' className='delete-btn' onClick={deleteInput}>
-          ❌
+          X
         </button>
       ) : null}
-      {searchedList.map(({ tail, name, image }) => (
-        <div key={tail}>
-          <p className='title'>{name}</p>
-          <img id={tail} src={image} alt='amiiboCard' onClick={openPopup} />
+      {searched.map((amiibo) => (
+        <div key={amiibo.tail}>
+          <p className='title'>{amiibo.name}</p>
+          <img
+            id={amiibo.tail}
+            src={amiibo.image}
+            alt='amiiboCard'
+            onClick={openPopup}
+          />
         </div>
       ))}
     </div>
