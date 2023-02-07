@@ -6,7 +6,7 @@ import '../Style.scss'
 function Home() {
   const [amiibo, setAmiibo] = useState([])
   const [loading, setLoading] = useState(true)
-  const [cardPopup, setCardPopup] = useState('')
+  const [clickedCard, setClickedCard] = useState('')
 
   const getAmiibo = async () => {
     try {
@@ -30,14 +30,15 @@ function Home() {
     () =>
       amiibo
         .filter((update) => update.release.jp === '2015-07-30')
-        .map(({ name, image, tail }) => ({ name, image, tail })),
+        .map(({ name, image, tail }) => ({ name, image, tail }))
+        .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)),
     [amiibo],
   )
 
-  const getCardPopup = (cardPopup) => {
-    setCardPopup(cardPopup)
+  const clickedImg = filterAmiibos.find((el) => el.tail === clickedCard)
+  const getClickedCard = (clickedCard) => {
+    setClickedCard(clickedCard)
   }
-  const clickedCard = filterAmiibos.find((el) => el.tail === cardPopup)
 
   return (
     <div className='main'>
@@ -46,13 +47,11 @@ function Home() {
           'Loading...'
         ) : (
           <div>
-            {cardPopup === clickedCard?.tail ? (
-              <CardPopup img={clickedCard?.image} />
-            ) : null}
+            <CardPopup img={clickedImg?.image} />
             <AmiiboCard
               filterAmiibos={filterAmiibos}
-              getCardPopup={getCardPopup}
-              cardPopup={cardPopup}
+              getClickedCard={getClickedCard}
+              clickedCard={clickedCard}
             />
           </div>
         )}
