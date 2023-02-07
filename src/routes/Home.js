@@ -1,9 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import AmiiboCard from '../components/AmiiboCard';
+import Style from '../Style.scss';
 
 function Home() {
 	const [amiibo, setAmiibo] = useState([]);
-	const [search, setSearch] = useState('');
+	const [loading, setLoading] = useState(true);
+	// const [cardModal, setCardModal] = useState(false);
 
 	const getAmiibo = async () => {
 		try {
@@ -15,38 +17,45 @@ function Home() {
 			setAmiibo(res.amiibo);
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setLoading(false);
 		}
 	};
 	useEffect(() => {
 		getAmiibo();
 	}, []);
 
-	const filterAmiibo = useMemo(() => {
-		return amiibo.filter((update) => update.release.jp === '2015-07-30');
+	const filterAmiibos = useMemo(() => {
+		return (
+			amiibo
+				.filter((update) => update.release.jp === '2015-07-30')
+				// .map((element) => {
+				// 	return { name: element.name, image: element.image };
+				// });
+				.map(({ name, image, tail }) => ({ name, image, tail }))
+		);
 	}, [amiibo]);
 
-	const userInput = (e) => {
-		setSearch(e.target.value);
-	};
-	const searching = filterAmiibo.filter((el) => {
-		return el.name.match(new RegExp(userInput, 'gi'));
-	});
+	// const getCardModal = (cardModal) => {
+	// 	setCardModal(cardModal);
+	// };
 
 	return (
 		<div className="main">
+			{/* {cardModal === true ? <CardModal image={filterAmiibos.image} /> : null} */}
 			<div className="contents">
-				<input
-					type="text"
-					placeholder="검색어를 입력해주세요."
-					value={search}
-					onChange={userInput}
-				/>
-				{filterAmiibo.map((v) => (
-					<AmiiboCard key={v.tail} {...v} />
-				))}
+				{loading ? 'Loading...' : <AmiiboCard filterAmiibos={filterAmiibos} />}
 			</div>
 		</div>
 	);
 }
+
+// function CardModal({image}) {
+// 	return (
+// 		<div className='card-modal'>
+// 			<img src={image} alt="amiiboCard" />
+// 		</div>
+// 	)
+// }
 
 export default Home;
