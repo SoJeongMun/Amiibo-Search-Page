@@ -7,6 +7,7 @@ function Home() {
   const [amiibo, setAmiibo] = useState([])
   const [loading, setLoading] = useState(true)
   const [cardPopup, setCardPopup] = useState('')
+  const [closePopup, setClosePopup] = useState(false)
 
   const getAmiibo = async () => {
     try {
@@ -30,14 +31,19 @@ function Home() {
     () =>
       amiibo
         .filter((update) => update.release.jp === '2015-07-30')
-        .map(({ name, image, tail }) => ({ name, image, tail })),
+        .map(({ name, image, tail }) => ({ name, image, tail }))
+        .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)),
     [amiibo],
   )
 
+  const clickedCard = filterAmiibos.find((el) => el.tail === cardPopup)
   const getCardPopup = (cardPopup) => {
     setCardPopup(cardPopup)
+    setClosePopup(!closePopup)
   }
-  const clickedCard = filterAmiibos.find((el) => el.tail === cardPopup)
+  const getClosePopup = (closePopup) => {
+    setClosePopup(closePopup)
+  }
 
   return (
     <div className='main'>
@@ -46,8 +52,12 @@ function Home() {
           'Loading...'
         ) : (
           <div>
-            {cardPopup === clickedCard?.tail ? (
-              <CardPopup img={clickedCard?.image} />
+            {cardPopup === clickedCard?.tail && closePopup === false ? (
+              <CardPopup
+                img={clickedCard?.image}
+                closePopup={closePopup}
+                getClosePopup={getClosePopup}
+              />
             ) : null}
             <AmiiboCard
               filterAmiibos={filterAmiibos}
