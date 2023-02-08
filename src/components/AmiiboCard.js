@@ -18,14 +18,15 @@ function AmiiboCard({ filterAmiibos, getClickedCard, clickedCard }) {
   }
 
   const openPopup = (e) => {
-    document.querySelector('.card-popup').classList.remove('hidden')
+    document.querySelector('.popup').classList.remove('hidden')
     clickedCard = e.target.id
     getClickedCard(clickedCard)
   }
 
   return (
-    <div className='container'>
+    <div className='container pt-10 columns-2xs max-w-screen-lg'>
       <input
+        className='break-after-column'
         type='text'
         placeholder='검색어를 입력해주세요.'
         value={userInput}
@@ -39,7 +40,13 @@ function AmiiboCard({ filterAmiibos, getClickedCard, clickedCard }) {
       {searchedList.map(({ tail, name, image }) => (
         <div key={tail}>
           <p className='title'>{name}</p>
-          <img id={tail} src={image} alt='amiiboCard' onClick={openPopup} />
+          <img
+            className='w-full'
+            id={tail}
+            src={image}
+            alt='amiiboCard'
+            onClick={openPopup}
+          />
         </div>
       ))}
     </div>

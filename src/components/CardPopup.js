@@ -1,11 +1,11 @@
 function CardPopup({ img }) {
   const onClick = () => {
-    document.querySelector('.card-popup').classList.add('hidden')
+    document.querySelector('.popup').classList.add('hidden')
   }
 
   return (
-    <div className='card-popup hidden'>
-      <div className='img-box'>
+    <div className='bg-black/40 hidden popup'>
+      <div>
         <img src={img} alt='amiiboCard' />
       </div>
       <button type='button' onClick={onClick}>
