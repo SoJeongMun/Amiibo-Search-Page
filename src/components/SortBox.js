@@ -1,61 +1,38 @@
-import { useMemo, useState } from 'react'
+import { useRef, useState } from 'react'
 import AmiiboCard from '../components/AmiiboCard'
 import CardPopup from '../components/CardPopup'
 
 function SortBox({ filterAmiibos }) {
   const optionList = [
-    { idx: '0', name: '오름차순' },
-    { idx: '1', name: '내림차순' },
-    { idx: '2', name: '업데이트순' },
+    {
+      idx: '0',
+      name: '오름차순',
+      sorter: (a, b) => a.name.localeCompare(b.name),
+    },
+    {
+      idx: '1',
+      name: '내림차순',
+      sorter: (a, b) => b.name.localeCompare(a.name),
+    },
+    { idx: '2', name: '업데이트순', sorter: (a, b) => a.tail - b.tail },
   ]
 
-  const sortedAmiibos = useMemo(
-    () =>
-      filterAmiibos
-        .map(({ name, image, tail }) => ({
-          name,
-          image,
-          tail,
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name)),
-    [filterAmiibos],
-  )
-  const reverseSortedAmiibos = useMemo(
-    () =>
-      filterAmiibos
-        .map(({ name, image, tail }) => ({
-          name,
-          image,
-          tail,
-        }))
-        .sort((a, b) => b.name.localeCompare(a.name)),
-    [filterAmiibos],
-  )
-  const latestSortedAmiibos = useMemo(
-    () =>
-      filterAmiibos
-        .map(({ name, image, tail }) => ({
-          name,
-          image,
-          tail,
-        }))
-        .sort((a, b) => a.tail - b.tail),
-    [filterAmiibos],
-  )
+  const amiiboData = filterAmiibos.map(({ name, image, tail }) => ({
+    name,
+    image,
+    tail,
+  }))
 
-  const [amiiboList, setAmiiboList] = useState(sortedAmiibos)
+  const [amiiboList, setAmiiboList] = useState(amiiboData)
 
   const onChange = (e) => {
     const userSelect = e.target.value
-    if (userSelect === '0') {
-      setAmiiboList(sortedAmiibos)
-    } else if (userSelect === '1') {
-      setAmiiboList(reverseSortedAmiibos)
-    } else {
-      setAmiiboList(latestSortedAmiibos)
-    }
+    const option = optionList.find((el) => el.idx === userSelect)
+    const selectedOption = amiiboData.sort(option.sorter)
+    setAmiiboList(selectedOption)
   }
 
+  const open = useRef()
   const [clickedCard, setClickedCard] = useState('')
 
   const clickedImg = filterAmiibos.find((el) => el.tail === clickedCard)
@@ -65,7 +42,7 @@ function SortBox({ filterAmiibos }) {
 
   return (
     <div>
-      <CardPopup img={clickedImg?.image} />
+      <CardPopup img={clickedImg?.image} ref={open} />
       <select onChange={onChange}>
         {optionList.map(({ idx, name }) => (
           <option key={idx} value={idx}>
