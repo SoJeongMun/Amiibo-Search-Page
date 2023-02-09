@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-function AmiiboCard({ filterAmiibos, getClickedCard, clickedCard }) {
+function AmiiboCard({ amiiboList, getClickedCard, clickedCard }) {
   const [userInput, setUserInput] = useState('')
 
   const onChangeSearch = (e) => {
@@ -8,10 +8,10 @@ function AmiiboCard({ filterAmiibos, getClickedCard, clickedCard }) {
   }
   const searchedList = useMemo(
     () =>
-      filterAmiibos.filter((elements) =>
+      amiiboList.filter((elements) =>
         elements.name?.match(new RegExp(userInput, 'gi')),
       ),
-    [filterAmiibos, userInput],
+    [amiiboList, userInput],
   )
   const deleteInput = () => {
     setUserInput('')
