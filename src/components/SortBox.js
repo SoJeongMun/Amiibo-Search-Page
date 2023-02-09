@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import AmiiboCard from '../components/AmiiboCard'
 import CardPopup from '../components/CardPopup'
 
@@ -32,7 +32,11 @@ function SortBox({ filterAmiibos }) {
     setAmiiboList(selectedOption)
   }
 
-  const open = useRef()
+  const [isOpen, setIsOpen] = useState(false)
+  const getIsOpen = (isOpen) => {
+    setIsOpen(isOpen)
+  }
+
   const [clickedCard, setClickedCard] = useState('')
 
   const clickedImg = filterAmiibos.find((el) => el.tail === clickedCard)
@@ -42,7 +46,7 @@ function SortBox({ filterAmiibos }) {
 
   return (
     <div>
-      <CardPopup img={clickedImg?.image} ref={open} />
+      {isOpen ? <CardPopup img={clickedImg?.image} /> : null}
       <select onChange={onChange}>
         {optionList.map(({ idx, name }) => (
           <option key={idx} value={idx}>
@@ -54,6 +58,8 @@ function SortBox({ filterAmiibos }) {
         amiiboList={amiiboList}
         getClickedCard={getClickedCard}
         clickedCard={clickedCard}
+        isOpen={isOpen}
+        getIsOpen={getIsOpen}
       />
     </div>
   )

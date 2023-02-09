@@ -1,6 +1,12 @@
 import { useMemo, useState } from 'react'
 
-function AmiiboCard({ amiiboList, getClickedCard, clickedCard }) {
+function AmiiboCard({
+  amiiboList,
+  getClickedCard,
+  clickedCard,
+  isOpen,
+  getIsOpen,
+}) {
   const [userInput, setUserInput] = useState('')
 
   const onChangeSearch = (e) => {
@@ -18,9 +24,10 @@ function AmiiboCard({ amiiboList, getClickedCard, clickedCard }) {
   }
 
   const openPopup = (e) => {
-    document.querySelector('.popup').classList.remove('hidden')
+    // document.querySelector('.popup').classList.remove('hidden')
     clickedCard = e.target.id
     getClickedCard(clickedCard)
+    getIsOpen(!isOpen)
   }
 
   return (

@@ -1,10 +1,13 @@
+import { useRef } from 'react'
+
 function CardPopup({ img }) {
-  const onClick = () => {
-    document.querySelector('.popup').classList.add('hidden')
+  const isClose = useRef()
+  const onClick = (e) => {
+    isClose.current.hidden = true
   }
 
   return (
-    <div className='bg-black/40 hidden popup'>
+    <div className='bg-black/40' ref={isClose}>
       <div>
         <img src={img} alt='amiiboCard' />
       </div>
