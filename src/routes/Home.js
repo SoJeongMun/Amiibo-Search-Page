@@ -29,7 +29,7 @@ function Home() {
   )
 
   return (
-    <div>
+    <div className='relative h-screen overflow-y-hidden'>
       {loading ? (
         'Loading...'
       ) : (

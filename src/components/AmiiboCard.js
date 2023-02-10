@@ -24,16 +24,15 @@ function AmiiboCard({
   }
 
   const openPopup = (e) => {
-    // document.querySelector('.popup').classList.remove('hidden')
     clickedCard = e.target.id
     getClickedCard(clickedCard)
     getIsOpen(!isOpen)
   }
 
   return (
-    <div className='container pt-10 columns-2xs max-w-screen-lg'>
+    <div className='container text-center'>
       <input
-        className='break-after-column'
+        className='mt-10 mb-20 w-1/2 focus:outline-none focus:border-b-amber-500 focus:border-b-2'
         type='text'
         placeholder='검색어를 입력해주세요.'
         value={userInput}
@@ -44,18 +43,20 @@ function AmiiboCard({
           ❌
         </button>
       ) : null}
-      {searchedList.map(({ tail, name, image }) => (
-        <div key={tail}>
-          <p className='title'>{name}</p>
-          <img
-            className='w-full'
-            id={tail}
-            src={image}
-            alt='amiiboCard'
-            onClick={openPopup}
-          />
-        </div>
-      ))}
+      <div className='flex flex-wrap justify-around'>
+        {searchedList.map(({ tail, name, image }) => (
+          <div key={tail} className='w-1/4 mx-3 mb-5'>
+            <img
+              className='w-full h-auto'
+              id={tail}
+              src={image}
+              alt='amiiboCard'
+              onClick={openPopup}
+            />
+            <p className='title'>{name}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

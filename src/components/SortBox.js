@@ -45,7 +45,7 @@ function SortBox({ filterAmiibos }) {
   }
 
   return (
-    <div>
+    <div className='relative'>
       {isOpen ? <CardPopup img={clickedImg?.image} /> : null}
       <select onChange={onChange}>
         {optionList.map(({ idx, name }) => (
