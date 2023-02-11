@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import AmiiboCard from '../components/AmiiboCard'
-import CardPopup from '../components/CardPopup'
+import AmiiboCard from 'components/AmiiboCard'
+import CardPopup from 'components/CardPopup'
 
 function SortBox({ filterAmiibos }) {
   const optionList = [
@@ -47,13 +47,15 @@ function SortBox({ filterAmiibos }) {
   return (
     <div className='relative'>
       {isOpen ? <CardPopup img={clickedImg?.image} /> : null}
-      <select onChange={onChange}>
-        {optionList.map(({ idx, name }) => (
-          <option key={idx} value={idx}>
-            {name}
-          </option>
-        ))}
-      </select>
+      <div className='fixed top-[4.7%] z-40 left-[5%] focus:outline-none'>
+        <select onChange={onChange}>
+          {optionList.map(({ idx, name }) => (
+            <option key={idx} value={idx}>
+              {name}
+            </option>
+          ))}
+        </select>
+      </div>
       <AmiiboCard
         amiiboList={amiiboList}
         getClickedCard={getClickedCard}

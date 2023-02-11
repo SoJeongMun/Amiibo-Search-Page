@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import SortBox from '../components/SortBox'
+import SortBox from 'components/SortBox'
 
 function Home() {
   const [amiibo, setAmiibo] = useState([])
@@ -29,7 +29,7 @@ function Home() {
   )
 
   return (
-    <div className='relative h-screen overflow-y-hidden'>
+    <div className='relative h-screen'>
       {loading ? (
         'Loading...'
       ) : (

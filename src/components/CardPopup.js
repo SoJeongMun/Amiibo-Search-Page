@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import close from 'assets/arrow.png'
 
 function CardPopup({ img }) {
   const isClose = useRef()
@@ -8,14 +9,14 @@ function CardPopup({ img }) {
 
   return (
     <div
-      className='z-10 absolute inset-0 bg-gray-500 bg-opacity-75 min-w-full min-h-full'
+      className='absolute inset-0 z-10 bg-white bg-opacity-80 min-w-full min-h-full'
       ref={isClose}
     >
-      <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-        <img src={img} alt='amiiboCard' />
-        <button type='button' onClick={onClick}>
-          닫기❌
+      <div className='absolute top-[20vh] left-1/2 -translate-x-1/2'>
+        <button type='button' onClick={onClick} className='w-[25px]'>
+          <img src={close} alt='close' />
         </button>
+        <img src={img} alt='amiiboCard' />
       </div>
     </div>
   )
