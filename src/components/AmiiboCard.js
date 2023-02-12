@@ -30,9 +30,36 @@ function AmiiboCard({
     getIsOpen(!isOpen)
   }
 
+  const onClose = () => {
+    window.close()
+  }
+  const moveToSite = () => {
+    window.open(
+      'https://www.nintendo.co.kr/software/switch/acbaa/index.html',
+      '_blank',
+    )
+  }
+  const onRefresh = () => {
+    window.location.reload()
+  }
+
   return (
     <div className='text-center'>
-      <div className='flex bg-white sticky top-0 z-10 w-full justify-center pt-5 pb-5'>
+      <div className='flex items-center bg-white sticky top-0 z-10 w-full px-10 pt-5 pb-5 shadow'>
+        <div className='flex gap-[6px] w-[23%]'>
+          <div
+            className='w-4 h-4 rounded-full bg-red-500'
+            onClick={onClose}
+          ></div>
+          <div
+            className='w-4 h-4 rounded-full bg-yellow-500'
+            onClick={moveToSite}
+          ></div>
+          <div
+            className='w-4 h-4 rounded-full bg-green-500'
+            onClick={onRefresh}
+          ></div>
+        </div>
         <input
           className='w-1/2 bg-amber-500 text-white focus:outline-none pt-2 pb-2 px-4 placeholder-white box-border rounded-full'
           type='text'
@@ -40,26 +67,19 @@ function AmiiboCard({
           value={userInput}
           onChange={onChangeSearch}
         />
-        {/* <input
-          className='w-1/2 focus:outline-none focus:border-b-amber-500 focus:border-b-2 hover:border-b-amber-500 hover:border-b-2'
-          type='text'
-          placeholder='검색어를 입력해주세요.'
-          value={userInput}
-          onChange={onChangeSearch}
-        /> */}
         {userInput.length ? (
           <button
             type='button'
-            className='absolute w-4 top-[43%] right-1/4'
+            className='absolute w-4 top-[40.5%] right-[29.5%]'
             onClick={deleteInput}
           >
             <img src={remove} alt='delete w-full' />
           </button>
         ) : null}
       </div>
-      <div className='flex flex-wrap justify-around mt-5'>
+      <div className='flex flex-wrap justify-around mt-10'>
         {searchedList.map(({ tail, name, image }) => (
-          <div key={tail} className='w-1/4 mx-3 mb-5'>
+          <div key={tail} className='w-1/5 mx-3 mb-10'>
             <img
               className='w-full h-auto'
               id={tail}
@@ -67,7 +87,9 @@ function AmiiboCard({
               alt='amiiboCard'
               onClick={openPopup}
             />
-            <p className='title'>{name}</p>
+            <h4 className='text-xl mt-4 inline-block border-b-2 border-orange-400 px-2 pb-1 hover:text-orange-400'>
+              {name}
+            </h4>
           </div>
         ))}
       </div>
