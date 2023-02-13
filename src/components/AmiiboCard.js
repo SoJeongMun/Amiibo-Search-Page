@@ -46,7 +46,7 @@ function AmiiboCard({
   return (
     <div className='text-center'>
       <div className='flex items-center bg-white sticky top-0 z-10 w-full px-10 pt-5 pb-5 shadow'>
-        <div className='flex gap-[6px] w-[23%]'>
+        <div className='flex gap-[10px] w-[23%]'>
           <div
             className='w-4 h-4 rounded-full bg-red-500'
             onClick={onClose}
