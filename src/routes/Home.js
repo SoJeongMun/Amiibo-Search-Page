@@ -1,12 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
-import AmiiboCard from '../components/AmiiboCard'
-import CardPopup from '../components/CardPopup'
-import '../Style.scss'
+import SortBox from '../components/SortBox'
 
 function Home() {
   const [amiibo, setAmiibo] = useState([])
   const [loading, setLoading] = useState(true)
-  const [cardPopup, setCardPopup] = useState('')
 
   const getAmiibo = async () => {
     try {
@@ -27,36 +24,19 @@ function Home() {
   }, [])
 
   const filterAmiibos = useMemo(
-    () =>
-      amiibo
-        .filter((update) => update.release.jp === '2015-07-30')
-        .map(({ name, image, tail }) => ({ name, image, tail })),
+    () => amiibo.filter((update) => update.release.jp === '2015-07-30'),
     [amiibo],
   )
 
-  const getCardPopup = (cardPopup) => {
-    setCardPopup(cardPopup)
-  }
-  const clickedCard = filterAmiibos.find((el) => el.tail === cardPopup)
-
   return (
-    <div className='main'>
-      <div className='contents'>
-        {loading ? (
-          'Loading...'
-        ) : (
-          <div>
-            {cardPopup === clickedCard?.tail ? (
-              <CardPopup img={clickedCard?.image} />
-            ) : null}
-            <AmiiboCard
-              filterAmiibos={filterAmiibos}
-              getCardPopup={getCardPopup}
-              cardPopup={cardPopup}
-            />
-          </div>
-        )}
-      </div>
+    <div>
+      {loading ? (
+        'Loading...'
+      ) : (
+        <div>
+          <SortBox filterAmiibos={filterAmiibos} />
+        </div>
+      )}
     </div>
   )
 }
