@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
-import SortBox from '../components/SortBox'
+import SortBox from 'components/SortBox'
+import logoImg from 'assets/logo.png'
 
 function Home() {
   const [amiibo, setAmiibo] = useState([])
@@ -29,9 +30,13 @@ function Home() {
   )
 
   return (
-    <div>
+    <div className='relative h-screen'>
       {loading ? (
-        'Loading...'
+        <img
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+          src={logoImg}
+          alt='logo'
+        />
       ) : (
         <div>
           <SortBox filterAmiibos={filterAmiibos} />
